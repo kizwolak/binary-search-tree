@@ -9,18 +9,22 @@ function Node (d) {
 function Tree (array) {
     function buildTree (array) {
         for (element of array) {
-            let elementCounter = 0;
-            for ()
-            if (elementCounter.length > 1) {
-                elementCounter.shift();
-                for (index of elementCounter) {
+            let elementIndexes = [];
+            for (let i = 0; i < array.length; i++) {
+                if (array[i] === element) (elementIndexes.push(i));
+            }
+            if (elementIndexes.length > 1) {
+                elementIndexes.shift();
+                for (index of elementIndexes) {
                     array.splice(index, 1);
                 }
+                console.log(array);
+                return array;
             }
         }
-        console.log(array);
         let sortedArray = array.sort();
-        console.log(sortedArray);
+        console.log(`Sorted: ${sortedArray}`);
+        return sortedArray;
     }
     return {
         sorted: console.log(buildTree(array)),
