@@ -18,12 +18,11 @@ function Tree (array) {
                 for (index of elementIndexes) {
                     array.splice(index, 1);
                 }
-
             }
         }
-        let sortedArray = array.sort(function(a, b) {return a - b});
-        console.log(`Sorted: ${sortedArray}`);
-        return sortedArray;
+        array.sort(function(a, b) {return a - b});
+        console.log(`Sorted: ${array}`);
+        return array;
     }
     return {
         sorted: buildTree(array),
