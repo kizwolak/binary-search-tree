@@ -63,19 +63,39 @@ function Tree (array) {
         console.log(tree);
     }
 
-    let inserted = insert(main, 2);
+    function nextMinimum (tree) {
+        let minValue = tree.data;
+        while (tree.data !== null) {
+            minValue = tree.left.data;
+            tree = tree.left;
+        }
+        return minValue;
+    }
+
+    function remove (tree, value) {
+        if (tree === null) return tree;
+        if (value < tree.data) return remove(tree.left, value);
+        else if (value > tree.data) return remove(tree.right, value);
+        if (tree.left === null && tree.right === null) tree.data = tree.left;
+        if (tree.left !== null && tree.right === null) tree.data = tree.left;
+        if (tree.right !== null && tree.left === null) tree.data = tree.right;
+        if (tree.left !== null && tree.right !== null) {
+            tree.data = nextMinimum(tree.right);
+            tree.right = remove (tree.right, tree.data);
+        }
+    }
+
+    insert(main, 10);
+    remove(main, 10);
 
     // let printInserted = prettyPrint(insert(main, 2));
     
     return {
         sorted: buildTree(sorted, 0, sorted.length - 1),
         printed: prettyPrint(main),
-        // logged: mainConsole,
-        insert: inserted,
-        // printedInsert: printInserted,
+
     }
 }
 
 let test = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 
-console.log(test.insert);
