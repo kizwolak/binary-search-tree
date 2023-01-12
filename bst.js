@@ -60,12 +60,11 @@ function Tree (array) {
         if (tree.data === value) return;
         if (value < tree.data) return insert(tree.left, value);
         if (value > tree.data) return insert(tree.right, value);
-        console.log(tree);
     }
 
     function nextMinimum (tree) {
         let minValue = tree.data;
-        while (tree.data !== null) {
+        while (tree.left !== null) {
             minValue = tree.left.data;
             tree = tree.left;
         }
@@ -76,12 +75,12 @@ function Tree (array) {
         if (tree === null) return tree;
         if (value < tree.data) return remove(tree.left, value);
         else if (value > tree.data) return remove(tree.right, value);
-        if (tree.left === null && tree.right === null) tree.data = tree.left;
-        if (tree.left !== null && tree.right === null) tree.data = tree.left;
-        if (tree.right !== null && tree.left === null) tree.data = tree.right;
+        if (tree.left === null && tree.right === null) return null;
+        if (tree.right === null) return tree.left;
+        if (tree.left === null) return tree.right;
         if (tree.left !== null && tree.right !== null) {
             tree.data = nextMinimum(tree.right);
-            tree.right = remove (tree.right, tree.data);
+            tree.right = remove(tree.right, tree.data);
         }
     }
 
@@ -93,7 +92,6 @@ function Tree (array) {
     return {
         sorted: buildTree(sorted, 0, sorted.length - 1),
         printed: prettyPrint(main),
-
     }
 }
 
