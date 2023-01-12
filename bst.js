@@ -87,14 +87,26 @@ function Tree (array) {
         return tree;
     }
 
-    insert(main, 10);
-    remove(main, 324);
+    // insert(main, 10);
+    // remove(main, 324);
     
+    function find (tree, value) {
+        if (tree === null) return new Error('BST does not contain value');
+        if (tree.data < value) return find(tree.right, value);
+        if (tree.data > value) return find(tree.left, value);
+        if (tree.data === value) return tree;
+    }
+
+    // let found = find(main, 11);
+
+
+
     return {
         sorted: buildTree(sorted, 0, sorted.length - 1),
         printed: prettyPrint(main),
+        found: found,
     }
 }
 
 let test = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-
+console.log(test.found);
