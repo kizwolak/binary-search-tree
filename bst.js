@@ -73,21 +73,22 @@ function Tree (array) {
 
     function remove (tree, value) {
         if (tree === null) return tree;
-        if (value < tree.data) return remove(tree.left, value);
-        else if (value > tree.data) return remove(tree.right, value);
-        if (tree.left === null && tree.right === null) return null;
-        if (tree.right === null) return tree.left;
-        if (tree.left === null) return tree.right;
-        if (tree.left !== null && tree.right !== null) {
-            tree.data = nextMinimum(tree.right);
-            tree.right = remove(tree.right, tree.data);
+        if (value < tree.data) tree.left = remove(tree.left, value);
+        else if (value > tree.data) tree.right = remove(tree.right, value);
+        else {
+            if (tree.left === null && tree.right === null) return null;
+            if (tree.right === null && tree.left !== null) return tree.left;
+            if (tree.left === null && tree.right !== null) return tree.right;
+            if (tree.left !== null && tree.right !== null) {
+                tree.data = nextMinimum(tree.right);
+                tree.right = remove(tree.right, tree.data);
+            }
         }
+        return tree;
     }
 
     insert(main, 10);
-    remove(main, 10);
-
-    // let printInserted = prettyPrint(insert(main, 2));
+    remove(main, 324);
     
     return {
         sorted: buildTree(sorted, 0, sorted.length - 1),
