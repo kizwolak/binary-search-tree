@@ -144,14 +144,36 @@ function Tree (array) {
         postorder(tree.left, func);
     }
 
-    let inOrder = postorder(main, log);
+    function mainHeight (tree, value) {
+        if (tree === null) return -1;
+        let leftHeight = mainHeight(tree.left)
+        let rightHeight = mainHeight(tree.right);
+        return Math.max(leftHeight, rightHeight) + 1;
+    }
+
+    function height(tree, value) {
+        let nodeHeight = mainHeight(tree, value);
+        let current;
+        while (tree !== null) {
+            if (tree.data < value) {
+                nodeHeight -= 1;
+                tree = tree.right;
+            } else if (tree.data > value) {
+                nodeHeight -= 1;
+                tree = tree.left;
+            } else if (tree.data === value) return nodeHeight;
+        }
+    }
+
+    let foundHeight = height(main, 9);
 
     return {
         sorted: buildTree(sorted, 0, sorted.length - 1),
         printed: prettyPrint(main),
-        inOrder,
+        foundHeight,
     }
 }
 
 let test = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log(test.level);
+console.log(test.printed);
+console.log(test.foundHeight);
