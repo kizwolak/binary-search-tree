@@ -144,7 +144,7 @@ function Tree (array) {
         postorder(tree.left, func);
     }
 
-    function mainHeight (tree, value) {
+    function mainHeight (tree) {
         if (tree === null) return -1;
         let leftHeight = mainHeight(tree.left)
         let rightHeight = mainHeight(tree.right);
@@ -177,15 +177,27 @@ function Tree (array) {
         }
     }
 
-    let foundHeight = depth(main, 23);
+    function isBalanced(tree) {
+        if (tree === null) return true;
+        let leftHeight = mainHeight(tree.left);
+        let rightHeight = mainHeight(tree.right);
+        if (Math.abs(leftHeight - rightHeight <= 1 && isBalanced(tree.left) === true && isBalanced(tree.right) === true)) return true;
+        return false;
+    }
+
+    insert(main, 10)
+    insert(main, 12);
+
+    let isBalanced1 = isBalanced(main);
 
     return {
         sorted: buildTree(sorted, 0, sorted.length - 1),
         printed: prettyPrint(main),
-        foundHeight,
+        // foundHeight,
+        isBalanced1,
     }
 }
 
 let test = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 console.log(test.printed);
-console.log(test.foundHeight);
+console.log(test.isBalanced1);
