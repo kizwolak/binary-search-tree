@@ -99,14 +99,56 @@ function Tree (array) {
 
     // let found = find(main, 11);
 
+    function log(param) {
+        console.log(param);
+    }
 
+    function levelOrder (tree, func) {
+        let queue = [tree];
+        let spareArray = [];
+        let current;
+        while (queue.length !== 0) {
+            current = queue.shift();
+            if (current === null) continue;
+            if (func != null) func(current.data);
+            if (func == null) spareArray.push(current.data);
+            queue.push(current.left);
+            queue.push(current.right);
+        }
+    }
+
+    function inorder (tree, func) {
+        let current;
+        let spareArray = [];
+        let queue = [tree.left];
+        while (queue.length !== 0) {
+            current = queue.shift();
+            if (current === null) continue;
+            if (func != null) func(current.data);
+            if (func == null) spareArray.push(current.data);
+            queue.push(current.left);
+            queue.push(current.right);
+        }
+        func(tree.data);
+        queue = [tree.right];
+        while (queue.length !== 0) {
+            current = queue.shift();
+            if (current === null) continue;
+            if (func != null) func(current.data);
+            if (func == null) spareArray.push(current.data);
+            queue.push(current.left);
+            queue.push(current.right);
+        }
+    }
+
+    let inOrder = inorder(main, log);
 
     return {
         sorted: buildTree(sorted, 0, sorted.length - 1),
         printed: prettyPrint(main),
-        found: found,
+        inOrder,
     }
 }
 
 let test = Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-console.log(test.found);
+console.log(test.level);
