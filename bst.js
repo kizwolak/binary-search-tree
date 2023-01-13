@@ -153,7 +153,6 @@ function Tree (array) {
 
     function height(tree, value) {
         let nodeHeight = mainHeight(tree, value);
-        let current;
         while (tree !== null) {
             if (tree.data < value) {
                 nodeHeight -= 1;
@@ -165,7 +164,20 @@ function Tree (array) {
         }
     }
 
-    let foundHeight = height(main, 9);
+    function depth(tree, value) {
+        let counter = 0;
+        while (tree !== null) {
+            if (tree.data < value) {
+                counter += 1;
+                tree = tree.right;
+            } else if (tree.data > value) {
+                counter += 1;
+                tree = tree.left;
+            } else if (tree.data === value) return counter;
+        }
+    }
+
+    let foundHeight = depth(main, 23);
 
     return {
         sorted: buildTree(sorted, 0, sorted.length - 1),
