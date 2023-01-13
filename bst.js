@@ -118,30 +118,33 @@ function Tree (array) {
     }
 
     function inorder (tree, func) {
-        let current;
         let spareArray = [];
-        let queue = [tree.left];
-        while (queue.length !== 0) {
-            current = queue.shift();
-            if (current === null) continue;
-            if (func != null) func(current.data);
-            if (func == null) spareArray.push(current.data);
-            queue.push(current.left);
-            queue.push(current.right);
-        }
-        func(tree.data);
-        queue = [tree.right];
-        while (queue.length !== 0) {
-            current = queue.shift();
-            if (current === null) continue;
-            if (func != null) func(current.data);
-            if (func == null) spareArray.push(current.data);
-            queue.push(current.left);
-            queue.push(current.right);
-        }
+        if (tree === null) return;
+        inorder(tree.left, func);
+        if (func == null) spareArray.push(tree.data);
+        else func(tree.data);
+        inorder(tree.right, func);
     }
 
-    let inOrder = inorder(main, log);
+    function preorder (tree, func) {
+        let spareArray = [];
+        if (tree === null) return;
+        if (func == null) spareArray.push(tree.data);
+        else func(tree.data);
+        preorder(tree.left, func);
+        preorder(tree.right, func);
+    }
+    
+    function postorder (tree, func) {
+        let spareArray = [];
+        if (tree === null) return;
+        postorder(tree.right, func);
+        if (func == null) spareArray.push(tree.data);
+        else func(tree.data);
+        postorder(tree.left, func);
+    }
+
+    let inOrder = postorder(main, log);
 
     return {
         sorted: buildTree(sorted, 0, sorted.length - 1),
